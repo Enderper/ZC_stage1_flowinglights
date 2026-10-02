@@ -1,0 +1,26 @@
+# ========== Keil MDK-ARM Build Artifacts ==========
+*.o
+*.d
+*.crf
+*.htm
+*.build_log.htm
+*.axf
+*.hex
+*.map
+*.lnp
+*.dep
+*.lst
+
+# ========== Machine-specific user preferences ==========
+MDK-ARM/My_Chassis.uvguix.*
+MDK-ARM/EventRecorderStub.scvd
+MDK-ARM/DebugConfig/
+MDK-ARM/新建文件夹/
+
+# ========== Visual Studio Code ==========
+MDK-ARM/.vscode/*.log
+MDK-ARM/.vscode/*.lock
+
+# ========== Windows ==========
+Thumbs.db
+Desktop.ini
