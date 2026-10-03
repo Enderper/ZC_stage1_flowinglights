@@ -27,6 +27,7 @@
 #include "bsp_led.h"
 #include "bsp_uart.h"
 #include "bsp_soft_pwm.h"
+#include "cmd_parser.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,6 +96,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Bsp_Uart_Init();
   Bsp_SoftPwm_Init();
+  CmdParser_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,19 +109,17 @@ int main(void)
 
     // LED����
     // // LED12-15
-    // Bsp_Led_SetMask((1UL << 12) | (1UL << 14)); // ����LED12��LED14
+    // Bsp_SoftPwm_SetMask(1UL << 12); // ����LED12
+    // Bsp_SoftPwm_SetBrightness(0); // ��������Ϊ100%
     // HAL_Delay(500);
-    Bsp_SoftPwm_SetMask(1UL << 12); // ����LED12
-    Bsp_SoftPwm_SetBrightness(0); // ��������Ϊ100%
-    HAL_Delay(500);
-    Bsp_SoftPwm_SetBrightness(25);
-    HAL_Delay(500);
-    Bsp_SoftPwm_SetBrightness(50);
-    HAL_Delay(500);
-    Bsp_SoftPwm_SetBrightness(75);
-    HAL_Delay(500);
-    Bsp_SoftPwm_SetBrightness(100);
-    HAL_Delay(500);
+    // Bsp_SoftPwm_SetBrightness(25);
+    // HAL_Delay(500);
+    // Bsp_SoftPwm_SetBrightness(50);
+    // HAL_Delay(500);
+    // Bsp_SoftPwm_SetBrightness(75);
+    // HAL_Delay(500);
+    // Bsp_SoftPwm_SetBrightness(100);
+    // HAL_Delay(500);
     
     // ���ڲ���
     // if (Bsp_Uart_Available() > 0) {
@@ -129,6 +129,7 @@ int main(void)
     //     Bsp_Uart_SendString(&data1);
     //     HAL_Delay(100);
     // }
+    CmdParser_Process();
 
   }
   /* USER CODE END 3 */
