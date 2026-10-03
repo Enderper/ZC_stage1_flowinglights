@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "bsp_led.h"
+#include "bsp_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -89,7 +90,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  Bsp_Uart_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,12 +100,26 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    // LED12-15
 
-    Bsp_LED_On(12);
-    HAL_Delay(500);
-    Bsp_LED_Off(12);
-    HAL_Delay(500);
+    // LED测试
+
+    // // LED12-15
+
+    // Bsp_LED_On(12);
+    // HAL_Delay(500);
+    // Bsp_LED_Off(12);
+    // HAL_Delay(500);
+
+    // 串口测试
+
+    if (Bsp_Uart_Available() > 0) {
+        uint8_t data = Bsp_Uart_ReadChar();
+        char data1 = (char)data;
+        // 回显接收到的数据
+        Bsp_Uart_SendString(&data1);
+        HAL_Delay(100);
+    }
+
 
   }
   /* USER CODE END 3 */
