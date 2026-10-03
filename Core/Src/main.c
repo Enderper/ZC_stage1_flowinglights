@@ -26,6 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include "bsp_led.h"
 #include "bsp_uart.h"
+#include "bsp_soft_pwm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,6 +94,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   Bsp_Uart_Init();
+  Bsp_SoftPwm_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,14 +105,23 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-    // LED²âÊÔ
+    // LEDï¿½ï¿½ï¿½ï¿½
     // // LED12-15
-    Bsp_Led_SetMask((1UL << 12) | (1UL << 14)); // µãÁÁLED12ºÍLED14
-    HAL_Delay(500); // ÑÓÊ±500ºÁÃë
-    Bsp_Led_SetMask((1UL << 13) | (1UL << 15)); // µãÁÁLED13ºÍLED15
-    HAL_Delay(500); // ÑÓÊ±500ºÁÃë
-
-    // ´®¿Ú²âÊÔ
+    // Bsp_Led_SetMask((1UL << 12) | (1UL << 14)); // ï¿½ï¿½ï¿½ï¿½LED12ï¿½ï¿½LED14
+    // HAL_Delay(500);
+    Bsp_SoftPwm_SetMask(1UL << 12); // ï¿½ï¿½ï¿½ï¿½LED12
+    Bsp_SoftPwm_SetBrightness(0); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª100%
+    HAL_Delay(500);
+    Bsp_SoftPwm_SetBrightness(25);
+    HAL_Delay(500);
+    Bsp_SoftPwm_SetBrightness(50);
+    HAL_Delay(500);
+    Bsp_SoftPwm_SetBrightness(75);
+    HAL_Delay(500);
+    Bsp_SoftPwm_SetBrightness(100);
+    HAL_Delay(500);
+    
+    // ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½
     // if (Bsp_Uart_Available() > 0) {
     //     uint8_t data = Bsp_Uart_ReadChar();
     //     char data1 = (char)data;
