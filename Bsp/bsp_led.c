@@ -78,3 +78,22 @@ void Bsp_Led_AllOff(void)
         HAL_GPIO_WritePin(led_pins[i].port, led_pins[i].pin, GPIO_PIN_SET);
     }
 }
+
+/**
+ * @brief  根据掩码设置LED状态
+ * @param  mask: LED掩码
+ * @retval None
+ * @note   LED的点亮熄灭可以直接操作寄存器，更快
+ */
+void Bsp_Led_SetMask(uint32_t mask)
+{
+    for (uint8_t i = 0; i < LED_NUM; i++) {
+        if (mask & (1UL << i)) { //检查掩码的第i位是否为 1，如果是则点亮第i个LED
+            // 低电平点亮
+            HAL_GPIO_WritePin(led_pins[i].port, led_pins[i].pin, GPIO_PIN_RESET);
+        } else {
+            // 高电平熄灭
+            HAL_GPIO_WritePin(led_pins[i].port, led_pins[i].pin, GPIO_PIN_SET);
+        }
+    }
+}

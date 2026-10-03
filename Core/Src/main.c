@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -89,6 +90,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   Bsp_Uart_Init();
   /* USER CODE END 2 */
@@ -102,24 +104,20 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
     // LED²âÊÔ
-
     // // LED12-15
-
-    // Bsp_LED_On(12);
-    // HAL_Delay(500);
-    // Bsp_LED_Off(12);
-    // HAL_Delay(500);
+    Bsp_Led_SetMask((1UL << 12) | (1UL << 14)); // µãÁÁLED12ºÍLED14
+    HAL_Delay(500); // ÑÓÊ±500ºÁÃë
+    Bsp_Led_SetMask((1UL << 13) | (1UL << 15)); // µãÁÁLED13ºÍLED15
+    HAL_Delay(500); // ÑÓÊ±500ºÁÃë
 
     // ´®¿Ú²âÊÔ
-
-    if (Bsp_Uart_Available() > 0) {
-        uint8_t data = Bsp_Uart_ReadChar();
-        char data1 = (char)data;
-        // »ØÏÔ½ÓÊÕµ½µÄÊý¾Ý
-        Bsp_Uart_SendString(&data1);
-        HAL_Delay(100);
-    }
-
+    // if (Bsp_Uart_Available() > 0) {
+    //     uint8_t data = Bsp_Uart_ReadChar();
+    //     char data1 = (char)data;
+    //     // ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //     Bsp_Uart_SendString(&data1);
+    //     HAL_Delay(100);
+    // }
 
   }
   /* USER CODE END 3 */
