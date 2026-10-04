@@ -24,12 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_led.h"
-#include "bsp_uart.h"
-#include "bsp_soft_pwm.h"
-#include "cmd_parser.h"
-#include "effect.h"
-#include "app_state.h"
+#include "app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,10 +91,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  Bsp_Uart_Init();
-  Bsp_SoftPwm_Init();
-  CmdParser_Init();
-  AppState_Init();
+  App_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,30 +102,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-    // LED����
     // // LED12-15
-    // Bsp_SoftPwm_SetMask(1UL << 12); // ����LED12
-    // Bsp_SoftPwm_SetBrightness(0); // ��������Ϊ100%
-    // HAL_Delay(500);
-    // Bsp_SoftPwm_SetBrightness(25);
-    // HAL_Delay(500);
-    // Bsp_SoftPwm_SetBrightness(50);
-    // HAL_Delay(500);
-    // Bsp_SoftPwm_SetBrightness(75);
-    // HAL_Delay(500);
-    // Bsp_SoftPwm_SetBrightness(100);
-    // HAL_Delay(500);
-    
-    // ���ڲ���
-    // if (Bsp_Uart_Available() > 0) {
-    //     uint8_t data = Bsp_Uart_ReadChar();
-    //     char data1 = (char)data;
-    //     // ���Խ��յ�������
-    //     Bsp_Uart_SendString(&data1);
-    //     HAL_Delay(100);
-    // }
-    CmdParser_Process();
-    Effect_Update();
+    App_Loop();
 
   }
   /* USER CODE END 3 */
