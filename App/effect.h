@@ -6,6 +6,6 @@
 void Effect_Init(void);
 void Effect_Reset(void);
 void Effect_Update(void);       // 主循环中非阻塞调用
-void Effect_SetMode(uint8_t mode);
+uint8_t Effect_SetMode(uint8_t mode);
 
 #endif

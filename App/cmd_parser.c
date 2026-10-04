@@ -14,6 +14,10 @@ static uint8_t  cmd_overflow;   // 1=当前命令过长，丢弃直到\r\n
 
 static void CmdParser_Execute(const char *cmd);
 
+/**
+ * @brief 初始化串口命令处理
+ * 
+ */
 void CmdParser_Init(void)
 {
     cmd_index = 0;
@@ -139,14 +143,18 @@ static void CmdParser_Execute(const char *cmd)
         }
 
         // 假设已实现模式 0~5，超出范围返回 ERR
-        if (n < 0 || n > 5)
+        if (n < 0)
         {
             Bsp_Uart_SendString("ERR\r\n");
             return;
         }
 
-        g_app_state.mode = (uint8_t)n;
-        Effect_SetMode((uint8_t)n);
+        if (Effect_SetMode((uint8_t)n) != 0)
+        {
+            Bsp_Uart_SendString("ERR\r\n");
+            return;
+        }
+
         Bsp_Uart_SendString("OK\r\n");
         return;
     }
