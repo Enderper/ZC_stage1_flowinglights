@@ -97,7 +97,7 @@ static void CmdParser_Execute(const char *cmd)
     if (strcmp(cmd, "GET") == 0)
     {
         char response[32];
-        snprintf(response, sizeof(response), "RUN=%d,BRI=%d,MODE=%d\r\n",
+        snprintf(response, sizeof(response), "STATE,RUN=%d,BRI=%d,MODE=%d\r\n",
                  g_app_state.run_state,
                  g_app_state.brightness,
                  g_app_state.mode);

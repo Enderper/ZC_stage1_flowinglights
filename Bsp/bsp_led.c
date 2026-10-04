@@ -44,12 +44,13 @@ void LED_Init(void)
 
 /**
  * @brief  点亮指定LED
- * @param  led_index: LED索引，与label一致
+ * @param  led_index: LED索引，与label一致,1-30
+ * @note   目前仅用于测试，实际流水中并未使用
  * @retval None
  */
 void Bsp_Led_On(uint8_t led_index)
 {
-    if (led_index >= LED_NUM) {
+    if (led_index > LED_NUM || led_index < 1) {
         return; // 索引超出范围，直接返回
     }
     HAL_GPIO_WritePin(led_pins[led_index-1].port, led_pins[led_index-1].pin, GPIO_PIN_RESET);
@@ -57,12 +58,13 @@ void Bsp_Led_On(uint8_t led_index)
 
 /**
  * @brief  熄灭指定LED
- * @param  led_index: LED索引，与label一致
+ * @param  led_index: LED索引，与label一致,1-30
+ * @note   目前仅用于测试，实际流水中并未使用
  * @retval None
  */
 void Bsp_Led_Off(uint8_t led_index)
 {
-    if (led_index >= LED_NUM) {
+    if (led_index > LED_NUM || led_index < 1) {
         return; // 索引超出范围，直接返回
     }
     HAL_GPIO_WritePin(led_pins[led_index-1].port, led_pins[led_index-1].pin, GPIO_PIN_SET);
@@ -91,9 +93,11 @@ void Bsp_Led_SetMask(uint32_t mask)
         if (mask & (1UL << i)) { //检查掩码的第i位是否为 1，如果是则点亮第i个LED
             // 低电平点亮
             HAL_GPIO_WritePin(led_pins[i].port, led_pins[i].pin, GPIO_PIN_RESET);
+            // led_pins[i].port -> BRR = led_pins[i].pin;
         } else {
             // 高电平熄灭
             HAL_GPIO_WritePin(led_pins[i].port, led_pins[i].pin, GPIO_PIN_SET);
+            // led_pins[i].port -> BSRR = led_pins[i].pin;
         }
     }
 }
