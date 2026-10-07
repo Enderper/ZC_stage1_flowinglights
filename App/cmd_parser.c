@@ -38,7 +38,11 @@ void CmdParser_Process(void)
         // 遇到'\r'或'\n'表示一条命令结束
         if (ch == '\r' || ch == '\n')
         {
-            if (cmd_index > 0 && !cmd_overflow)
+            if (cmd_overflow)
+            {
+                Bsp_Uart_SendString("ERR\r\n"); // 整行过长，报错
+            }
+            else if (cmd_index > 0 && !cmd_overflow)
             {
                 cmd_buf[cmd_index] = '\0';  // 添加字符串结束符
                 CmdParser_Execute(cmd_buf); // 解析并执行
