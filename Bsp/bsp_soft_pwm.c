@@ -77,3 +77,13 @@ void Bsp_SoftPwm_SetMask(uint32_t mask)
 {
     pwm_mask = mask;
 }
+
+/**
+ * @brief 获取当前亮度值，给应用层使用
+ * 
+ * @return uint8_t 亮度值
+ */
+uint8_t Bsp_SoftPwm_GetBrightness(void)
+{
+    return pwm_brightness;
+}

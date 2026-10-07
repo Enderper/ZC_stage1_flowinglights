@@ -6,7 +6,6 @@
 typedef struct
 {
     volatile uint8_t run_state;     // 运行状态
-    volatile uint8_t brightness;     // 亮度值
     volatile uint8_t mode;          // 基础模式
 } AppState_t;
 

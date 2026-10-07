@@ -99,7 +99,7 @@ static void CmdParser_Execute(const char *cmd)
         char response[32];
         snprintf(response, sizeof(response), "STATE,RUN=%d,BRI=%d,MODE=%d\r\n",
                  g_app_state.run_state,
-                 g_app_state.brightness,
+                 Bsp_SoftPwm_GetBrightness(),
                  g_app_state.mode);
         Bsp_Uart_SendString(response);
         return;
@@ -124,7 +124,6 @@ static void CmdParser_Execute(const char *cmd)
             return;
         }
 
-        g_app_state.brightness = (uint8_t)n;
         Bsp_SoftPwm_SetBrightness((uint8_t)n);
         Bsp_Uart_SendString("OK\r\n");
         return;
