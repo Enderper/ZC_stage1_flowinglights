@@ -19,17 +19,7 @@ void Effect_Init(void)
  */
 void Effect_Reset(void)
 {
-    switch (g_app_state.mode)
-    {
-        case 0:
-            Effect_ResetStep();
-            break;
-
-        // ...
-
-        default:
-            break;
-    }
+    Effect_ResetStep();
 }
 
 /**
@@ -79,9 +69,9 @@ void Effect_Update(void)
  * 
  * @param mode 
  */
-uint8_t Effect_SetMode(uint8_t mode)
+uint8_t Effect_SetMode(int mode)
 {
-    if (mode != 0)
+    if (mode < 0 || mode > MODE_MAX)
     {
         return 1;
     }

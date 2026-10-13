@@ -14,6 +14,6 @@
 void Effect_Init(void);
 void Effect_Reset(void);
 void Effect_Update(void);       
-uint8_t Effect_SetMode(uint8_t mode);
+uint8_t Effect_SetMode(int mode);
 
 #endif
