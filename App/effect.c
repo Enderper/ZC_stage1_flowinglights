@@ -1,6 +1,7 @@
 #include "effect.h"
 #include "app_state.h"
 #include "bsp_soft_pwm.h"
+#include "effect_modes.h"
 
 /**
  * @brief 初始化各个流水效果
@@ -8,7 +9,7 @@
  */
 void Effect_Init(void)
 {
-    Effect_BaseFlow_Init();
+    Effect_Flow_Init();
     // ...
 }
 
@@ -21,7 +22,7 @@ void Effect_Reset(void)
     switch (g_app_state.mode)
     {
         case 0:
-            Effect_BaseFlow_Reset();
+            Effect_ResetStep();
             break;
 
         // ...
@@ -48,11 +49,24 @@ void Effect_Update(void)
     // 根据不同模式设置不同效果
     switch (g_app_state.mode)
     {
-        case 0:
+        case 0://基础流水
             Effect_BaseFlow_Update();
             break;
-        
-        // ...
+        // case 1://往返流水
+        //     Effect_PingPong_Updata();
+        //     break;
+        // case 2://中心扩散
+        //     Effect_CENTER_Update();
+        //     break;
+        // case 3://两侧汇聚
+        //     Effect_CONVERGE_Update();
+        //     break;
+        // case 4://逐级堆叠
+        //     Effect_STACK_Update();
+        //     break;
+        // case 5://奇偶交替
+        //     Effect_ODDEVEN_Update();
+        //     break;
 
         default:
            Bsp_SoftPwm_SetMask(0);

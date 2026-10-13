@@ -145,7 +145,7 @@ static void CmdParser_Execute(const char *cmd)
             return;
         }
 
-        // 假设已实现模式 0~5，超出范围返回 ERR
+        // 模式 0~5，超出范围返回 ERR
         if (n < 0)
         {
             Bsp_Uart_SendString("ERR\r\n");

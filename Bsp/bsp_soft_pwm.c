@@ -22,13 +22,14 @@ void Bsp_SoftPwm_Init(void)
 }
 
 /**
- * @brief 软PWM中断处理函数
+ * @brief 软PWM中断处理函数，软PWM的主要实现
  * @note  在TIM2_IRQHandler中调用
  * 
  */
 void Bsp_SoftPwm_IRQHandler(void)
 {
     pwm_counter++;
+    // 计数超过ARR重置
     if (pwm_counter >= PWM_LEVELS)
     {
         pwm_counter = 0;
@@ -38,17 +39,20 @@ void Bsp_SoftPwm_IRQHandler(void)
 
     if (pwm_brightness > 0)
     {
+        // CCR超过ARR，直接使得灯常亮
         if (pwm_brightness >= PWM_LEVELS) 
         {
-            output = pwm_mask;          // 100%：常亮
+            output = pwm_mask;
         } 
+        // 计数小于CCR，点亮
         else if (pwm_counter < pwm_brightness) 
         {
-            output = pwm_mask;          // 亮
+            output = pwm_mask;
         } 
+        // 计数大于CCR，熄灭
         else 
         {
-            output = 0;                 // 灭
+            output = 0;
         }
     }
 
