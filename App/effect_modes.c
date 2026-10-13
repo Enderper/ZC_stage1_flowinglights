@@ -27,7 +27,8 @@ void Effect_ResetStep(void)
 }
 
 /**
- * @brief 非阻塞更新LED状态，100ms推进一次
+ * @brief 基础流水
+ * @note  非阻塞更新LED状态，固定时间推进一次
  * 
  */
 void Effect_BaseFlow_Update(void)
@@ -35,10 +36,103 @@ void Effect_BaseFlow_Update(void)
     Effect_Step();
     // 不论是否亮每轮都设置掩码保存进度
     //Bsp_SoftPwm_SetMask(1UL << base_index);
-    Bsp_SoftPwm_SetMask(Effect_Led_Rematch((uint8_t)(effect_step % LED_NUM)));
+    uint8_t pos = effect_step % LED_NUM;
+    Bsp_SoftPwm_SetMask(Effect_Led_Rematch(pos));
 }
 
+/**
+ * @brief 往返流水
+ * @note  三角波 0 -> N-1 -> 1 -> 0
+ * 
+ */
+void Effect_PingPong_Updata(void)
+{
+    Effect_Step();
 
+    uint32_t period = 2 * (LED_NUM - 1); // 一个来回所需步数
+    uint32_t t = effect_step % period;
+    
+    uint8_t  pos = (t < LED_NUM) ? (uint8_t)t // 去程： 0->N-1
+                      :(uint8_t)(period - t); // 回程:  N-2..1
+
+    Bsp_SoftPwm_SetMask(Effect_Led_Rematch(pos));
+}
+
+/**
+ * @brief 中心向两侧扩散
+ * @note  从中间两颗灯开始，每步同时向两侧各扩散一格
+ * 
+ */
+void Effect_Center_Update(void)
+{
+    Effect_Step();
+
+    uint32_t half = LED_NUM / 2;        // 中心分界，如30灯为15
+    uint32_t k = effect_step % half;    // 0 .. half-1
+
+    uint8_t left  = (uint8_t)(half - 1 - k); // 14 -> 0
+    uint8_t right = (uint8_t)(half + k);     // 15 -> 29
+
+    Bsp_SoftPwm_SetMask(Effect_Led_Rematch(left) | Effect_Led_Rematch(right));
+}
+
+/**
+ * @brief 两侧向中心汇聚
+ * @note  从两端开始，每步同时向中间各收缩一格
+ * 
+ */
+void Effect_Converge_Update(void)
+{
+    Effect_Step();
+
+    uint32_t half = LED_NUM / 2;        // 半步数
+    uint32_t k = effect_step % half;    // 0 .. half-1
+
+    uint8_t left  = (uint8_t)k;                 // 0 -> 14
+    uint8_t right = (uint8_t)(LED_NUM - 1 - k); // 29 -> 15
+
+    Bsp_SoftPwm_SetMask(Effect_Led_Rematch(left) | Effect_Led_Rematch(right));
+}
+
+/**
+ * @brief 逐级堆叠
+ * @note  按顺序逐颗点亮，堆满后清空重来
+ * 
+ */
+void Effect_Stack_Update(void)
+{
+    Effect_Step();
+
+    uint32_t count = effect_step % (LED_NUM + 1); // 0 .. N（0为清空帧）
+    uint32_t mask = 0;
+
+    for (uint8_t i = 0; i < count; i++)
+    {
+        mask |= Effect_Led_Rematch(i);
+    }
+
+    Bsp_SoftPwm_SetMask(mask);
+}
+
+/**
+ * @brief 奇偶交替
+ * @note  奇数位与偶数位灯交替点亮
+ * 
+ */
+void Effect_OddEven_Update(void)
+{
+    Effect_Step();
+
+    uint8_t start = (uint8_t)(effect_step & 1); // 0:偶位 1:奇位
+    uint32_t mask = 0;
+
+    for (uint8_t i = start; i < LED_NUM; i += 2)
+    {
+        mask |= Effect_Led_Rematch(i);
+    }
+
+    Bsp_SoftPwm_SetMask(mask);
+}
 
 
 

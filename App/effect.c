@@ -42,21 +42,21 @@ void Effect_Update(void)
         case 0://基础流水
             Effect_BaseFlow_Update();
             break;
-        // case 1://往返流水
-        //     Effect_PingPong_Updata();
-        //     break;
-        // case 2://中心扩散
-        //     Effect_CENTER_Update();
-        //     break;
-        // case 3://两侧汇聚
-        //     Effect_CONVERGE_Update();
-        //     break;
-        // case 4://逐级堆叠
-        //     Effect_STACK_Update();
-        //     break;
-        // case 5://奇偶交替
-        //     Effect_ODDEVEN_Update();
-        //     break;
+         case 1://往返流水
+             Effect_PingPong_Updata();
+             break;
+         case 2://中心扩散
+             Effect_Center_Update();
+             break;
+         case 3://两侧汇聚
+             Effect_Converge_Update();
+             break;
+         case 4://逐级堆叠
+             Effect_Stack_Update();
+             break;
+         case 5://奇偶交替
+             Effect_OddEven_Update();
+             break;
 
         default:
            Bsp_SoftPwm_SetMask(0);
