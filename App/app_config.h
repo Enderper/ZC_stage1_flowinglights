@@ -7,5 +7,4 @@ typedef struct {
     uint16_t pin;
 } LedPin_t;
 
-// 请理解为什么要这么写
 extern const LedPin_t led_pins[LED_NUM];

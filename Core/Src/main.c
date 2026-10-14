@@ -95,9 +95,6 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   App_Init();
- //HAL_GPIO_WritePin(GPIOA, LED8_Pin, GPIO_PIN_RESET);
- //HAL_GPIO_WritePin(GPIOA, LED7_Pin, GPIO_PIN_SET);
- //HAL_GPIO_WritePin(GPIOA, LED6_Pin, GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -108,10 +105,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-   App_Loop();
+    App_Loop();
 
-    //HAL_GPIO_TogglePin(GPIOA, LED8_Pin);
-    //HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

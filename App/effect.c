@@ -4,7 +4,8 @@
 #include "effect_modes.h"
 
 /**
- * @brief 初始化各个流水效果
+ * @brief 初始化特效
+ * @note  复位共享步数
  * 
  */
 void Effect_Init(void)
@@ -14,7 +15,8 @@ void Effect_Init(void)
 }
 
 /**
- * @brief 复位当前效果
+ * @brief 复位当前特效
+ * @note  所有模式共用同一套步进计数
  * 
  */
 void Effect_Reset(void)
@@ -29,7 +31,7 @@ void Effect_Reset(void)
  */
 void Effect_Update(void)
 {
-    // 若运行态为0,STOP,熄灭所有oled
+    // 若运行态为0,STOP,熄灭所有led
     if (g_app_state.run_state == 0)
     {
         Bsp_SoftPwm_SetMask(0);
@@ -39,22 +41,22 @@ void Effect_Update(void)
     // 根据不同模式设置不同效果
     switch (g_app_state.mode)
     {
-        case 0://基础流水
+        case MODE_BASE_FLOW://基础流水
             Effect_BaseFlow_Update();
             break;
-         case 1://往返流水
-             Effect_PingPong_Updata();
+         case MODE_PINGPONG://往返流水
+             Effect_PingPong_Update();
              break;
-         case 2://中心扩散
+         case MODE_CENTER://中心扩散
              Effect_Center_Update();
              break;
-         case 3://两侧汇聚
+         case MODE_CONVERGE://两侧汇聚
              Effect_Converge_Update();
              break;
-         case 4://逐级堆叠
+         case MODE_STACK://逐级堆叠
              Effect_Stack_Update();
              break;
-         case 5://奇偶交替
+         case MODE_ODDEVEN://奇偶交替
              Effect_OddEven_Update();
              break;
 
@@ -65,9 +67,10 @@ void Effect_Update(void)
 }
 
 /**
- * @brief 切换模式
+ * @brief  切换模式
+ * @param  mode 
+ * @return 成功0，参数越界1
  * 
- * @param mode 
  */
 uint8_t Effect_SetMode(int mode)
 {

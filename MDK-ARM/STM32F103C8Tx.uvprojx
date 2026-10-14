@@ -780,16 +780,6 @@
               <FileType>5</FileType>
               <FilePath>..\Userlib\ring_buffer.h</FilePath>
             </File>
-            <File>
-              <FileName>utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Userlib\utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Userlib\utils.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

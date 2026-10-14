@@ -145,7 +145,7 @@ static void CmdParser_Execute(const char *cmd)
             return;
         }
 
-        // 模式 0~5，超出范围返回 ERR
+        // 模式 0~MODE_MAX，超出范围返回 ERR
         if (Effect_SetMode(n) != 0)
         {
             Bsp_Uart_SendString("ERR\r\n");

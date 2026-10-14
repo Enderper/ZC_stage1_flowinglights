@@ -24,6 +24,8 @@ void Bsp_SoftPwm_Init(void)
 /**
  * @brief 软PWM中断处理函数，软PWM的主要实现
  * @note  在TIM2_IRQHandler中调用
+ * @note  软PWM：conter在0-99循环，与亮度阈值进行比较后
+ *        按掩码决定灯的亮灭；频率=中断频率/PWM_LEVELS
  * 
  */
 void Bsp_SoftPwm_IRQHandler(void)
@@ -61,8 +63,8 @@ void Bsp_SoftPwm_IRQHandler(void)
 
 /**
  * @brief 设置LED亮度
+ * @param bri 0-100,超过100按100截断
  * 
- * @param bri 
  */
 void Bsp_SoftPwm_SetBrightness(uint8_t bri)
 {

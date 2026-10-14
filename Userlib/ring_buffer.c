@@ -34,8 +34,8 @@ uint8_t RingBuffer_Put(RingBuffer_t *rb, uint8_t data)
 /**
  * @brief 从循环缓冲区中取得数据
  * @param rb 循环缓冲区的结构体指针
- * @param data Pointer to store the retrieved data
- * @return 成功返回 1， 缓冲区满失败返回 0
+ * @param data 输出参数,用于存放读出的字节
+ * @return 成功返回 1， 缓冲区空失败返回 0
  */
 uint8_t RingBuffer_Get(RingBuffer_t *rb, uint8_t *data)
 {
@@ -48,9 +48,9 @@ uint8_t RingBuffer_Get(RingBuffer_t *rb, uint8_t *data)
 }
 
 /**
- * @brief 检查循环缓冲区中的可用空间
+ * @brief 返回缓冲区中可读字数
  * @param rb 循环缓冲区的结构体指针
- * @return 循环缓冲区中可用字节数(tail到head之间的字节数)
+ * @return 可读字节数(tail到head之间的字节数)
  */
 uint16_t RingBuffer_Available(RingBuffer_t *rb)
 {

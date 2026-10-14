@@ -8,7 +8,7 @@ void Effect_ResetStep(void);
 void Effect_BaseFlow_Update(void);
 
 // ∂ÓÕ‚Ãÿ–ß
-void Effect_PingPong_Updata(void);
+void Effect_PingPong_Update(void);
 void Effect_Center_Update(void);
 void Effect_Converge_Update(void);
 void Effect_Stack_Update(void);
